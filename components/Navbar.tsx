@@ -19,7 +19,6 @@ export default function Navbar() {
 
   return (
     <header className="w-full bg-white dark:bg-gray-900 border-b px-6 py-3 flex justify-between items-center">
-      {/* Logo or Title */}
       <Link href="/" className="text-xl font-bold text-primary">
         Admin Dashboard
       </Link>
