@@ -7,7 +7,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
-import { Pencil, Plus, Trash2 } from "lucide-react";
+import { Pencil, Trash2 } from "lucide-react";
+import Loading from "./Loading";
+
+export const revalidate = 3600;
 
 export default function ProductCard() {
   const dispatch = useDispatch<AppDispatch>()
@@ -17,19 +20,14 @@ export default function ProductCard() {
     dispatch(fetchProducts())
   }, [dispatch])
 
-  console.log(products);
+
+  if (loading) return <Loading />;
+
+  if (error) return <p>error</p>;
 
   return (
     <div className="space-y-6 p-4">
-      {/* Add Product Button */}
-      <div className="flex justify-end">
-        <Button className="flex gap-2 items-center">
-          <Plus className="h-4 w-4" />
-          Add Product
-        </Button>
-      </div>
 
-      {/* Product Cards */}
       <div className="grid lg:grid-cols-3 grid-cols-1 gap-6">
         {products.map((p) => (
           <Card key={p.id} className="p-0 pb-5">

@@ -1,5 +1,5 @@
 export default function page() {
-  return <div>
+  return <div className="font-sans grid items-center justify-items-center min-h-screen">
     dashboard
   </div>
 }
