@@ -2,6 +2,8 @@ import { CardDemo } from "@/components/loginCard";
 
 export default function page() {
   return (
-    <CardDemo />
+    <div className="font-sans grid items-center justify-items-center min-h-screen">
+      <CardDemo />
+    </div>
   )
 }
