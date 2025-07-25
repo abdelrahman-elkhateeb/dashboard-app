@@ -1,9 +1,9 @@
-import { CardDemo } from "./cardDemo";
+import { CardDemo } from "./loginCard";
 
 export default function Home() {
   return (
     <div className="font-sans grid items-center justify-items-center min-h-screen ">
-      <CardDemo />
+      home page
     </div>
   );
 }
