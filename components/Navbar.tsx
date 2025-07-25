@@ -19,6 +19,7 @@ import Link from "next/link"
 import { useState } from "react"
 import Cookies from 'js-cookie'
 import { useRouter } from "next/navigation"
+import { usePathname } from 'next/navigation'
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
@@ -30,6 +31,10 @@ export default function Navbar() {
     Cookies.remove("token")
     router.push("/login");
   }
+  const pathname = usePathname()
+  const hideNavbar = pathname === '/login';
+  
+  if (hideNavbar) return null;
 
   return (
     <header className="w-full bg-white dark:bg-gray-900 border-b px-6 py-3 flex justify-between items-center">
