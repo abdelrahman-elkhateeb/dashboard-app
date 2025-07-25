@@ -28,12 +28,13 @@ export default function Navbar() {
   const handleLinkClick = () => setOpen(false)
 
   const handleLogout = () => {
-    Cookies.remove("token")
-    router.push("/login");
+    Cookies.remove('token')
+    router.replace('/login');
   }
+
   const pathname = usePathname()
   const hideNavbar = pathname === '/login';
-  
+
   if (hideNavbar) return null;
 
   return (
