@@ -23,7 +23,7 @@ const initialState: ProductState = {
   error: null
 }
 
-export const fetchProducts = createAsyncThunk("produc/fetchProducts", async () => {
+export const fetchProducts = createAsyncThunk("product/fetchProducts", async () => {
   const response = await fetch("https://62fb62afe4bcaf5351837ac1.mockapi.io/product")
   if (!response.ok) throw new Error("failed to fetch products")
   return await response.json()
