@@ -35,7 +35,14 @@ export const deleteProducts = createAsyncThunk("products/delete", async (id: str
   return id;
 });
 
-export const addProduct = createAsyncThunk('products/add', async (product) => {
+export const addProduct = createAsyncThunk('products/add', async (product: {
+  name: string;
+  description: string;
+  category: string;
+  image: string;
+  price: string;
+
+}) => {
   const response = await axios.post(API_URL, product);
   return response.data;
 });
@@ -57,6 +64,18 @@ const productSlice = createSlice({
       .addCase(fetchProducts.rejected, (state, action) => {
         state.loading = false
         state.error = action.error.message || "Something went wrong"
+      })
+      .addCase(addProduct.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(addProduct.fulfilled, (state, action) => {
+        state.loading = false;
+        state.products.push(action.payload);
+      })
+      .addCase(addProduct.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || "Failed to add product";
       })
   }
 })
