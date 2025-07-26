@@ -1,4 +1,5 @@
 "use client"
+import axios from 'axios';
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
@@ -22,12 +23,22 @@ const initialState: ProductState = {
   loading: false,
   error: null
 }
+const API_URL = 'https://62fb62afe4bcaf5351837ac1.mockapi.io/product';
 
-export const fetchProducts = createAsyncThunk("product/fetchProducts", async () => {
-  const response = await fetch("https://62fb62afe4bcaf5351837ac1.mockapi.io/product")
-  if (!response.ok) throw new Error("failed to fetch products")
-  return await response.json()
-})
+export const fetchProducts = createAsyncThunk('products/fetch', async () => {
+  const response = await axios.get(API_URL);
+  return response.data;
+});
+
+export const deleteProducts = createAsyncThunk("products/delete", async (id: string) => {
+  await axios.delete(`${API_URL}/${id}`);
+  return id;
+});
+
+export const addProduct = createAsyncThunk('products/add', async (product) => {
+  const response = await axios.post(API_URL, product);
+  return response.data;
+});
 
 const productSlice = createSlice({
   name: "product",

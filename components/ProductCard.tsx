@@ -1,6 +1,6 @@
 "use client"
 import { AppDispatch, RootState } from "@/store";
-import { fetchProducts } from "@/store/productSlice";
+import { deleteProducts, fetchProducts } from "@/store/productSlice";
 import Image from "next/image";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,6 +20,9 @@ export default function ProductCard() {
     dispatch(fetchProducts())
   }, [dispatch])
 
+  const handleDelete = (id: string) => {
+    dispatch(deleteProducts(id));
+  };
 
   if (loading) return <Loading />;
 
@@ -60,7 +63,8 @@ export default function ProductCard() {
                 </Button>
                 <Button
                   variant="destructive"
-                  className="flex-1 flex items-center gap-2"
+                  className="flex-1 flex items-center gap-2 cursor-pointer"
+                  onClick={() => handleDelete(p.id)}
                 >
                   <Trash2 className="w-4 h-4" />
                   Delete
