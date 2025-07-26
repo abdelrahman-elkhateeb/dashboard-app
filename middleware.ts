@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { GetServerSidePropsContext } from 'next';
 
 export function middleware(request: NextRequest) {
   const token = request.cookies.get("token")?.value;
@@ -17,5 +16,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!api|_next|.*\\..*).*)'], // Apply to all routes except static & API
+  matcher: ['/dashboard/:path*', '/products/:path*', '/settings/:path*'],
 };
