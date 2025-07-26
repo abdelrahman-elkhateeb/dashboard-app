@@ -2,12 +2,12 @@
 import { AppDispatch, RootState } from "@/store";
 import { deleteProducts, fetchProducts } from "@/store/productSlice";
 import Image from "next/image";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
-import { Pencil, Trash2 } from "lucide-react";
+import { Loader2, Pencil, Trash2 } from "lucide-react";
 import Loading from "./Loading";
 
 export const revalidate = 3600;
@@ -20,8 +20,12 @@ export default function ProductCard() {
     dispatch(fetchProducts())
   }, [dispatch])
 
-  const handleDelete = (id: string) => {
-    dispatch(deleteProducts(id));
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const handleDelete = async (id: string) => {
+    setDeletingId(id);
+    await dispatch(deleteProducts(id));
+    dispatch(fetchProducts());
+    setDeletingId(null);
   };
 
   if (loading) return <Loading />;
@@ -63,11 +67,21 @@ export default function ProductCard() {
                 </Button>
                 <Button
                   variant="destructive"
-                  className="flex-1 flex items-center gap-2 cursor-pointer"
+                  className="flex-1 flex items-center gap-2"
                   onClick={() => handleDelete(p.id)}
+                  disabled={deletingId === p.id}
                 >
-                  <Trash2 className="w-4 h-4" />
-                  Delete
+                  {deletingId === p.id ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      Deleting...
+                    </>
+                  ) : (
+                    <>
+                      <Trash2 className="w-4 h-4" />
+                      Delete
+                    </>
+                  )}
                 </Button>
               </div>
             </CardContent>
